@@ -64,7 +64,7 @@ And finally, templates can include other templates. I'm using this mechanism in 
 
 Here's one of the template files:
 ```
-{% import "macros.hpp" as macros  %}
+{% raw %}{% import "macros.hpp" as macros  %}
 // This file is generated. Do not edit.
 #pragma once
 
@@ -81,7 +81,7 @@ public:
     {% for function in functions %}
     virtual {{ macros::cxx_type(type = function.return_type) }} {{ function.name -}}({{- macros::cxx_arguments_with_names(args = function.params) -}}) = 0;
     {% endfor %}
-};
+};{% endraw %}
 ```
 
 Most of the code should be pretty self-explanatory, especially if you have worked with Django templates before (tera is heavily inspired by the Django templating language). You can see that there are two iterations, one for the type aliases loaded straight from the configuration, and a second one for the API functions. The API function one uses macros. For example, the `macros::cxx_type` is imported from the file `macros.hpp` in the first line of the file.
@@ -89,8 +89,8 @@ Most of the code should be pretty self-explanatory, especially if you have worke
 ### The template macro library
 Here's an excerpt of the `macro.hpp` file:
 ```
-{%- macro cxx_type(type) -%}
-{%- if type.type == TYPES.Void -%}
+{% raw %}{%- macro cxx_type(type) -%}
+%- if type.type == TYPES.Void -%}
 void
 {%- elif type.type == TYPES.Bool -%}
 bool
@@ -105,7 +105,7 @@ char
 {%- else -%}
 {{ throw(message = "Unsupported type") }}
 {%- endif -%}
-{%- endmacro -%}
+{%- endmacro -%}{% endraw %}
 ...
 ```
 
@@ -161,3 +161,5 @@ The sources are compiling.
 
 ## Conclusion
 It took me some tinkering to understand the `windows-metadata` crate, but once you know how to extract types it is fairly straightforward. I was pleasantly surprised how easy the `tera` crate was to use, and how powerful the macro system is.
+
+You can find the code for this project [here](https://github.com/zaddach/mockingbird).
