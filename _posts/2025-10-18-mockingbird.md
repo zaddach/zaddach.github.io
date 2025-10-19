@@ -62,7 +62,7 @@ And finally, templates can include other templates. I'm using this mechanism in 
 
 ### A template
 
-Here's one of the template files:
+Here's one of the template files, `IWin32Api.hpp`:
 ```
 {% raw %}{% import "macros.hpp" as macros  %}
 // This file is generated. Do not edit.
