@@ -72,7 +72,7 @@ fn guarded() -> Result<(), microseh::Exception> {
 }
 ```
 
-## Tracelooging
+## Tracelogging
 
 Tracelogging is a breeze in Rust! You just need the [tracelogging](https://crates.io/crates/tracelogging) crate that
 supports being compiled in kernel drivers. Then you use [define_provider!(...)](https://github.com/zaddach/windows_kernel_programming_book_2e/blob/168e03e96e544ef8b668f6b549e0a1ba62570dd5/chapter_05/booster/src/lib.rs#L30-L34),
